@@ -4,7 +4,8 @@ import React, { useState, useRef, useEffect } from 'react';
 import { PhoneCall, Calendar, Truck, ThumbsUp } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { Card } from '../ui/Card';
-import SignupModal, { SignupData } from '../components/SignupModal';
+import SignupModal, { SignupData } from '../SignupModal';
+
 
 const steps = [
   {
