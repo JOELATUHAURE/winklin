@@ -1,7 +1,10 @@
-import React from 'react';
+// src/sections/HowItWorks.tsx
+
+import React, { useState, useRef, useEffect } from 'react';
 import { PhoneCall, Calendar, Truck, ThumbsUp } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { Card } from '../ui/Card';
+import SignupModal, { SignupData } from '../components/SignupModal';
 
 const steps = [
   {
@@ -35,9 +38,29 @@ const steps = [
 ];
 
 export default function HowItWorks() {
+  const [isSignupOpen, setSignupOpen] = useState(false);
+  const [userData, setUserData] = useState<SignupData | null>(null);
+  const scheduleRef = useRef<HTMLDivElement>(null);
+
+  // When signup completes, scroll smoothly to the Schedule step
+  useEffect(() => {
+    if (userData && scheduleRef.current) {
+      scheduleRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }, [userData]);
+
   return (
     <section id="how-it-works" className="section bg-surface-100 dark:bg-surface-900 overflow-hidden">
+      {/* Signup modal */}
+      <SignupModal
+        isOpen={isSignupOpen}
+        services={steps.map(s => ({ id: String(s.id), title: s.title }))}
+        onClose={() => setSignupOpen(false)}
+        onComplete={data => setUserData(data)}
+      />
+
       <div className="container">
+        {/* Heading */}
         <div className="text-center max-w-3xl mx-auto mb-16">
           <h2 className="heading-lg mb-4">How It Works</h2>
           <p className="text-surface-600 dark:text-surface-400 text-lg">
@@ -45,18 +68,22 @@ export default function HowItWorks() {
           </p>
         </div>
 
+        {/* Steps */}
         <div className="relative">
-          {/* Process line */}
-          <div className="hidden lg:block absolute top-24 left-0 w-full h-1 bg-surface-300 dark:bg-surface-700 z-0"></div>
-
+          <div className="hidden lg:block absolute top-24 left-0 w-full h-1 bg-surface-300 dark:bg-surface-700 z-0" />
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 relative z-10">
             {steps.map((step, index) => (
               <motion.div
                 key={step.id}
+                // Attach ref to Schedule step
+                ref={step.id === 2 ? scheduleRef : undefined}
+                // Open signup modal when Sign Up step is clicked
+                onClick={() => step.id === 1 && setSignupOpen(true)}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-100px" }}
+                viewport={{ once: true, margin: '-100px' }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
+                className={`cursor-pointer`}
               >
                 <Card className="text-center h-full">
                   <div className="mb-6">
@@ -75,6 +102,7 @@ export default function HowItWorks() {
           </div>
         </div>
 
+        {/* Fleet Tracking Section (unchanged) */}
         <div className="mt-20 bg-primary-50 dark:bg-primary-900/20 rounded-2xl p-8 md:p-12 lg:p-16">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
             <div>
@@ -112,7 +140,7 @@ export default function HowItWorks() {
                 </p>
               </div>
               <div className="aspect-square w-full rounded-xl overflow-hidden">
-                <img 
+                <img
                   src="https://images.pexels.com/photos/2035909/pexels-photo-2035909.jpeg?auto=compress&cs=tinysrgb&w=1200"
                   alt="Map representation"
                   className="w-full h-full object-cover opacity-30"
