@@ -4,6 +4,7 @@ import { useTheme } from '../ThemeProvider';
 import { cn } from '../../lib/utils';
 import { MenuItem } from '../../types';
 import Logo from '../ui/Logo';
+import { AnimatePresence, motion } from 'framer-motion';
 
 const menuItems: MenuItem[] = [
   { label: 'Home', href: '#' },
@@ -22,14 +23,16 @@ export default function Header() {
   useEffect(() => {
     const handleScroll = () => {
       const isScrolled = window.scrollY > 10;
-      if (isScrolled !== scrolled) {
-        setScrolled(isScrolled);
-      }
+      setScrolled(isScrolled);
     };
 
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [scrolled]);
+  }, []);
+
+  useEffect(() => {
+    document.body.style.overflow = isMenuOpen ? 'hidden' : '';
+  }, [isMenuOpen]);
 
   return (
     <header
@@ -95,48 +98,50 @@ export default function Header() {
               className="p-2 rounded-lg hover:bg-surface-200 dark:hover:bg-surface-800 transition-colors"
               aria-label="Toggle menu"
             >
-              {isMenuOpen ? (
-                <X className="w-6 h-6" />
-              ) : (
-                <Menu className="w-6 h-6" />
-              )}
+              {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
           </div>
         </div>
       </div>
 
-      {/* Mobile Menu */}
-      <div
-        className={cn(
-          'fixed inset-x-0 top-[65px] z-40 bg-white dark:bg-surface-900 shadow-lg md:hidden transition-transform duration-300 ease-in-out',
-          isMenuOpen ? 'translate-y-0' : '-translate-y-full'
+      {/* Mobile Menu with Framer Motion */}
+      <AnimatePresence>
+        {isMenuOpen && (
+          <motion.div
+            key="mobile-menu"
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.3 }}
+            className="absolute top-full inset-x-0 z-40 bg-white dark:bg-surface-900 shadow-lg md:hidden"
+          >
+            <nav className="container py-5">
+              <ul className="flex flex-col space-y-4">
+                {menuItems.map(item => (
+                  <li key={item.label}>
+                    <a
+                      href={item.href}
+                      className="block py-2 text-surface-700 dark:text-surface-300 hover:text-primary-500 dark:hover:text-primary-400 font-medium transition-colors"
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      {item.label}
+                    </a>
+                  </li>
+                ))}
+                <li>
+                  <a 
+                    href="#contact" 
+                    className="btn-primary w-full text-center"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    Book Now
+                  </a>
+                </li>
+              </ul>
+            </nav>
+          </motion.div>
         )}
-      >
-        <nav className="container py-5">
-          <ul className="flex flex-col space-y-4">
-            {menuItems.map(item => (
-              <li key={item.label}>
-                <a
-                  href={item.href}
-                  className="block py-2 text-surface-700 dark:text-surface-300 hover:text-primary-500 dark:hover:text-primary-400 font-medium transition-colors"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  {item.label}
-                </a>
-              </li>
-            ))}
-            <li>
-              <a 
-                href="#contact" 
-                className="btn-primary w-full text-center"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Book Now
-              </a>
-            </li>
-          </ul>
-        </nav>
-      </div>
+      </AnimatePresence>
     </header>
   );
 }
