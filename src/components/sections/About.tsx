@@ -7,17 +7,18 @@ import { TeamMember } from '../../types';
 const teamMembers: TeamMember[] = [
   {
     id: '1',
-    name: 'Sarah Nambi',
+ name: 'Mr. Godwin',
     role: 'CEO & Founder',
-    bio: 'Sarah founded WinKlin with a vision to revolutionize waste management in Uganda while creating jobs.',
-    image: 'https://images.pexels.com/photos/2381069/pexels-photo-2381069.jpeg?auto=compress&cs=tinysrgb&w=400'
+    bio: 'David oversees all operations and ensures our services are delivered with excellence.',
+    image: 'https://images.pexels.com/photos/2379005/pexels-photo-2379005.jpeg?auto=compress&cs=tinysrgb&w=400'
   },
   {
     id: '2',
-    name: 'David Mukasa',
+    name: 'Joel Atuhaire',
     role: 'Operations Manager',
-    bio: 'David oversees all operations and ensures our services are delivered with excellence.',
-    image: 'https://images.pexels.com/photos/2379005/pexels-photo-2379005.jpeg?auto=compress&cs=tinysrgb&w=400'
+    bio: 'Joel oversees all operations and ensures our services are delivered with excellence.',
+    image: '/images/portfolio-img (1).png'
+
   },
   {
     id: '3',
@@ -60,11 +61,13 @@ export default function About() {
               <div className="absolute -top-4 -left-4 w-24 h-24 bg-primary-500/20 rounded-lg"></div>
               <div className="absolute -bottom-4 -right-4 w-32 h-32 bg-accent-500/20 rounded-lg"></div>
               <div className="relative z-10 rounded-xl overflow-hidden aspect-video">
+                
                 <img 
-                  src="https://images.pexels.com/photos/4587154/pexels-photo-4587154.jpeg?auto=compress&cs=tinysrgb&w=1200" 
-                  alt="WinKlin team" 
-                  className="w-full h-full object-cover"
-                />
+  src="/images/winlin.jpeg" 
+  alt="WinKlin team" 
+  className="w-full h-full object-cover"
+/>
+
               </div>
             </div>
           </div>
