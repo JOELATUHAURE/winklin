@@ -78,7 +78,8 @@ export default {
       },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-        'hero-pattern': "url('https://images.pexels.com/photos/3856440/pexels-photo-3856440.jpeg?auto=compress&cs=tinysrgb&w=1920')",
+        'hero-pattern': "url('/images/winklin.jpeg')",
+
       },
       keyframes: {
         'fade-in': {
