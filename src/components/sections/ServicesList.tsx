@@ -18,7 +18,8 @@ const services: Service[] = [
       'Electronic receipts',
       'GPS fleet tracking'
     ],
-    image: 'https://images.pexels.com/photos/4399088/pexels-photo-4399088.jpeg?auto=compress&cs=tinysrgb&w=1200'
+    image: '/images/winlin3.jpeg'
+
   },
   {
     id: '2',
