@@ -46,7 +46,7 @@ const services: Service[] = [
       'Floor maintenance',
       'Post-construction cleaning'
     ],
-    image: 'https://images.pexels.com/photos/4239036/pexels-photo-4239036.jpeg?auto=compress&cs=tinysrgb&w=1200'
+   image: '/images/winlin3.jpeg' // ✅ Replaced with local image
   }
 ];
 
